@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en" Name="InClassCommandSet">
+    <CommandPrefix>Donegal Tuesday</CommandPrefix>
+    <Example>Start the Donegal Tuesday App</Example>
+
+    <Command Name="startNew">
+      <Example>Start a new day called Donegal Tuesday</Example>
+      <ListenFor>Start [a] new day called Donegal Tuesday</ListenFor>
+      <Feedback>Trying to start Donegal Tuesday</Feedback>
+      <Navigate Target="MainPage.xaml" />
+    </Command>
+  </CommandSet>
+</VoiceCommands>
