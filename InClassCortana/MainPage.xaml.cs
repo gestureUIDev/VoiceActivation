@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,24 @@ namespace InClassCortana
         public MainPage()
         {
             this.InitializeComponent();
+            // need to use the navigatedto event to get the parameters
+
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            try
+            {
+                // get the parameters from e
+                var myParam = (VoiceParameterClass)e.Parameter;
+                MessageDialog messageDialog = new MessageDialog(
+                                        myParam.xValue + myParam.yValue);
+                await messageDialog.ShowAsync();
+            }
+            catch
+            {
+            }
         }
     }
 }

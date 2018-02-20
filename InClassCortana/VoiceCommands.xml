@@ -1,14 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="en" Name="InClassCommandSet">
-    <CommandPrefix>Donegal Tuesday</CommandPrefix>
-    <Example>Start the Donegal Tuesday App</Example>
+    <CommandPrefix>You Tac</CommandPrefix>
+    <Example>Start a new game of tic-tac-toe</Example>
 
     <Command Name="startNew">
-      <Example>Start a new day called Donegal Tuesday</Example>
-      <ListenFor>Start [a] new day called Donegal Tuesday</ListenFor>
-      <Feedback>Trying to start Donegal Tuesday</Feedback>
+      <Example>Start a new game of tic-tac-toe</Example>
+      <ListenFor>Start [a] [new] game of tic-tac-toe</ListenFor>
+      <Feedback>starting a new game</Feedback>
       <Navigate Target="MainPage.xaml" />
     </Command>
+  
+    <Command Name="makeMove">
+      <Example>Move to square X is 1 Y is 2</Example>
+      <ListenFor>Move [to] [square] X is {xPosition} Y is {yPosition}</ListenFor>
+      <Feedback>Trying to make that move, please wait</Feedback>
+      <Navigate Target="MainPage.xaml" />
+    </Command>
+    
+    <PhraseList Label="xPosition">
+      <Item>0</Item>
+      <Item>1</Item>
+      <Item>2</Item>
+    </PhraseList>
+
+    <PhraseList Label="yPosition">
+      <Item>0</Item>
+      <Item>1</Item>
+      <Item>2</Item>
+    </PhraseList>
+
   </CommandSet>
 </VoiceCommands>

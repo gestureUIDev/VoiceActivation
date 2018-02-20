@@ -112,6 +112,10 @@ namespace InClassCortana
             base.OnActivated(args);
             VoiceCommandActivatedEventArgs commandArgs = null;
             Type navigateToType = null;
+            string xValue = "None", yValue = "None";  // returned from xPosition and yPosition
+
+            // use this to pass information to MainPage
+            VoiceParameterClass myArgs = new VoiceParameterClass();
 
             // handle voice activation here.
             if( args.Kind == ActivationKind.VoiceCommand )
@@ -123,6 +127,12 @@ namespace InClassCortana
                                 commandArgs.Result;
                 string voiceCmdName = speechRecognitionResult.RulePath[0];
                 string textSpoken = speechRecognitionResult.Text;
+                // save these anyway
+                myArgs.textSpoken = textSpoken;
+                myArgs.commandName = voiceCmdName;
+
+                // used for the semantic interpretation of commands
+                IReadOnlyList<string> recognisedVoiceCommandPhrases;
 
                 System.Diagnostics.Debug.WriteLine(voiceCmdName);
                 System.Diagnostics.Debug.WriteLine(textSpoken);
@@ -135,7 +145,25 @@ namespace InClassCortana
                         break;
                     case "makeMove":
                         System.Diagnostics.Debug.WriteLine("make a move command");
-                        //navigateToType = typeof(CurrentGame);
+                        // need to parse the x, y values from the text
+                        // use SpeechRecognitionResult
+                        if(speechRecognitionResult.SemanticInterpretation.
+                            Properties.TryGetValue("xPosition", 
+                            out recognisedVoiceCommandPhrases))
+                        {
+                            xValue = recognisedVoiceCommandPhrases.First();
+                            myArgs.xValue = xValue;
+                        }
+                        if (speechRecognitionResult.SemanticInterpretation.
+                            Properties.TryGetValue("yPosition",
+                            out recognisedVoiceCommandPhrases))
+                        {
+                            yValue = recognisedVoiceCommandPhrases.First();
+                            myArgs.yValue = yValue;
+                        }
+
+                        // pass parameters to the main page.
+                        navigateToType = typeof(MainPage);
                         break;
                     default:
                         break;
@@ -151,7 +179,7 @@ namespace InClassCortana
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     Window.Current.Content = rootFrame;
                 }
-                rootFrame.Navigate(navigateToType);
+                rootFrame.Navigate(navigateToType, myArgs);
                 Window.Current.Activate();
             }
         }
