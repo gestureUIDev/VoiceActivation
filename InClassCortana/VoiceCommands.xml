@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
-  <CommandSet xml:lang="en" Name="InClassCommandSet">
+  <CommandSet xml:lang="en-gb" Name="InClassCommandSet">
     <CommandPrefix>You Tac</CommandPrefix>
     <Example>Start a new game of tic-tac-toe</Example>
 
@@ -16,6 +16,13 @@
       <ListenFor>Move [to] [square] X is {xPosition} Y is {yPosition}</ListenFor>
       <Feedback>Trying to make that move, please wait</Feedback>
       <Navigate Target="MainPage.xaml" />
+    </Command>
+
+    <Command Name="howManyGames">
+      <Example>How many games am I playing?</Example>
+      <ListenFor RequireAppName ="ExplicitlySpecified">how many {builtin:AppName} games am I playing?</ListenFor>
+      <Feedback>Checking to see how many games</Feedback>
+      <VoiceCommandService Target="InClassBackgroundService" />
     </Command>
     
     <PhraseList Label="xPosition">

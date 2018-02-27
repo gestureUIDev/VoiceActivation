@@ -85,8 +85,8 @@ namespace InClassCortana
                 {
                     System.Diagnostics.Debug.WriteLine("Loading VCD...");
                     StorageFile vcdFile =
-                        await Package.Current.InstalledLocation.GetFileAsync(
-                                                    @"VoiceCommands.xml");
+                        await Package.Current.InstalledLocation.
+                                      GetFileAsync(@"VoiceCommands.xml");
                     await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(
                                                         vcdFile);
                     System.Diagnostics.Debug.WriteLine("successfully loaded VCD...");
@@ -113,6 +113,7 @@ namespace InClassCortana
             VoiceCommandActivatedEventArgs commandArgs = null;
             Type navigateToType = null;
             string xValue = "None", yValue = "None";  // returned from xPosition and yPosition
+            string commandMode;
 
             // use this to pass information to MainPage
             VoiceParameterClass myArgs = new VoiceParameterClass();
@@ -137,6 +138,17 @@ namespace InClassCortana
                 System.Diagnostics.Debug.WriteLine(voiceCmdName);
                 System.Diagnostics.Debug.WriteLine(textSpoken);
 
+
+                if(speechRecognitionResult.SemanticInterpretation.
+                                Properties.TryGetValue("commandMode", 
+                                out recognisedVoiceCommandPhrases))
+                {
+                    commandMode = recognisedVoiceCommandPhrases.First();
+
+                }
+
+
+
                 switch (voiceCmdName)
                 {
                     case "startNew":
@@ -151,6 +163,7 @@ namespace InClassCortana
                             Properties.TryGetValue("xPosition", 
                             out recognisedVoiceCommandPhrases))
                         {
+                            
                             xValue = recognisedVoiceCommandPhrases.First();
                             myArgs.xValue = xValue;
                         }
@@ -182,6 +195,7 @@ namespace InClassCortana
                 rootFrame.Navigate(navigateToType, myArgs);
                 Window.Current.Activate();
             }
+
         }
 
 
