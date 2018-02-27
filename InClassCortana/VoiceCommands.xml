@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
-  <CommandSet xml:lang="en-gb" Name="InClassCommandSet">
+  <CommandSet xml:lang="en-gb" Name="InClassCommandSet_en-gb">
     <CommandPrefix>You Tac</CommandPrefix>
     <Example>Start a new game of tic-tac-toe</Example>
 
     <Command Name="startNew">
-      <Example>Start a new game of tic-tac-toe</Example>
-      <ListenFor>Start [a] [new] game of tic-tac-toe</ListenFor>
+      <Example>Start a new game of tic tac toe</Example>
+      <ListenFor>Start [a] [new] game of tic tac toe</ListenFor>
       <Feedback>starting a new game</Feedback>
       <Navigate Target="MainPage.xaml" />
     </Command>

@@ -49,6 +49,23 @@ namespace InClassCortana
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
+            #region Register Voice Commands
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Loading VCD...");
+                StorageFile vcdFile =
+                    await Package.Current.InstalledLocation.
+                                  GetFileAsync(@"VoiceCommands.xml");
+                await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(
+                                                    vcdFile);
+                System.Diagnostics.Debug.WriteLine("successfully loaded VCD...");
+            }
+            catch (Exception err)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                            "Failed to install VCD - " + err.Message);
+            }
+            #endregion
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -79,24 +96,6 @@ namespace InClassCortana
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
-
-                // register voice commands here.
-                try
-                {
-                    System.Diagnostics.Debug.WriteLine("Loading VCD...");
-                    StorageFile vcdFile =
-                        await Package.Current.InstalledLocation.
-                                      GetFileAsync(@"VoiceCommands.xml");
-                    await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(
-                                                        vcdFile);
-                    System.Diagnostics.Debug.WriteLine("successfully loaded VCD...");
-                }
-                catch (Exception err)
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                                "Failed to install VCD - " + err.Message);
-                }
-
 
             }
         }
@@ -179,6 +178,7 @@ namespace InClassCortana
                         navigateToType = typeof(MainPage);
                         break;
                     default:
+                        navigateToType = typeof(MainPage);
                         break;
                 }
 
@@ -192,7 +192,7 @@ namespace InClassCortana
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     Window.Current.Content = rootFrame;
                 }
-                rootFrame.Navigate(navigateToType, myArgs);
+                rootFrame.Navigate(typeof(MainPage), myArgs);
                 Window.Current.Activate();
             }
 
